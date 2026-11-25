@@ -4,11 +4,14 @@
   "version": "${version}",
   "name": "SILICON FPS",
   "description": "A client-side performance optimization mod for low-end devices.",
-  "authors": [
-    "Silicon"
-  ],
+  "authors": ["Silicon"],
   "license": "MIT",
   "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.silicon.fps.SiliconFpsClient"
+    ]
+  },
   "depends": {
     "fabricloader": ">=0.18.4",
     "minecraft": "~1.21.11",
