@@ -26,9 +26,7 @@ public final class PerformanceConfig {
 
             if (Files.notExists(CONFIG_PATH)) {
                 properties.setProperty("reduceAmbientParticles", "true");
-                try (Writer writer = Files.newBufferedWriter(CONFIG_PATH)) {
-                    properties.store(writer, "SILICON FPS settings");
-                }
+                write(properties);
             }
 
             try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
@@ -48,6 +46,24 @@ public final class PerformanceConfig {
                     "Could not load SILICON FPS settings; using safe defaults.",
                     exception
             );
+        }
+    }
+
+    public static void save() {
+        Properties properties = new Properties();
+        properties.setProperty("reduceAmbientParticles", Boolean.toString(reduceAmbientParticles));
+
+        try {
+            Files.createDirectories(CONFIG_PATH.getParent());
+            write(properties);
+        } catch (IOException exception) {
+            SiliconFpsClient.LOGGER.warn("Could not save SILICON FPS settings.", exception);
+        }
+    }
+
+    private static void write(Properties properties) throws IOException {
+        try (Writer writer = Files.newBufferedWriter(CONFIG_PATH)) {
+            properties.store(writer, "SILICON FPS settings");
         }
     }
 }
