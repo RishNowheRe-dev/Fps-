@@ -24,6 +24,10 @@ public final class PerformanceHud {
     }
 
     private static void render(GuiGraphics graphics, DeltaTracker tickCounter) {
+        if (!PerformanceConfig.showPerformanceHud) {
+            return;
+        }
+
         Minecraft minecraft = Minecraft.getInstance();
         Runtime runtime = Runtime.getRuntime();
 
