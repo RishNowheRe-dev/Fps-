@@ -15,6 +15,7 @@ public class SiliconFpsClient implements ClientModInitializer {
     public void onInitializeClient() {
         PerformanceConfig.load();
         PerformanceHud.register();
+        PerformanceControls.register();
         LOGGER.info("SILICON FPS initialized successfully!");
     }
 }
