@@ -14,6 +14,7 @@ public final class PerformanceConfig {
             FabricLoader.getInstance().getConfigDir().resolve("siliconfps.properties");
 
     public static volatile boolean reduceAmbientParticles = true;
+    public static volatile boolean showPerformanceHud = true;
 
     private PerformanceConfig() {
     }
@@ -26,6 +27,7 @@ public final class PerformanceConfig {
 
             if (Files.notExists(CONFIG_PATH)) {
                 properties.setProperty("reduceAmbientParticles", "true");
+                properties.setProperty("showPerformanceHud", "true");
                 write(properties);
             }
 
@@ -36,10 +38,17 @@ public final class PerformanceConfig {
             reduceAmbientParticles = Boolean.parseBoolean(
                     properties.getProperty("reduceAmbientParticles", "true")
             );
+            showPerformanceHud = Boolean.parseBoolean(
+                    properties.getProperty("showPerformanceHud", "true")
+            );
 
             SiliconFpsClient.LOGGER.info(
                     "Ambient particle reduction: {}",
                     reduceAmbientParticles ? "ON" : "OFF"
+            );
+            SiliconFpsClient.LOGGER.info(
+                    "Performance HUD: {}",
+                    showPerformanceHud ? "ON" : "OFF"
             );
         } catch (IOException exception) {
             SiliconFpsClient.LOGGER.warn(
@@ -52,6 +61,7 @@ public final class PerformanceConfig {
     public static void save() {
         Properties properties = new Properties();
         properties.setProperty("reduceAmbientParticles", Boolean.toString(reduceAmbientParticles));
+        properties.setProperty("showPerformanceHud", Boolean.toString(showPerformanceHud));
 
         try {
             Files.createDirectories(CONFIG_PATH.getParent());
