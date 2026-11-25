@@ -13,6 +13,7 @@ public class SiliconFpsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        PerformanceHud.register();
         LOGGER.info("SILICON FPS initialized successfully!");
     }
 }
