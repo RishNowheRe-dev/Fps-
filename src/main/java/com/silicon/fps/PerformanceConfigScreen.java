@@ -7,7 +7,6 @@ import net.minecraft.network.chat.Component;
 
 public final class PerformanceConfigScreen extends Screen {
     private final Screen parent;
-    private Button particleButton;
 
     public PerformanceConfigScreen(Screen parent) {
         super(Component.literal("SILICON FPS Settings"));
@@ -19,18 +18,27 @@ public final class PerformanceConfigScreen extends Screen {
         int centerX = this.width / 2;
         int centerY = this.height / 2;
 
-        this.particleButton = this.addRenderableWidget(
+        this.addRenderableWidget(
                 Button.builder(particleButtonText(), button -> {
                     PerformanceConfig.reduceAmbientParticles =
                             !PerformanceConfig.reduceAmbientParticles;
                     PerformanceConfig.save();
                     button.setMessage(particleButtonText());
-                }).bounds(centerX - 105, centerY - 5, 210, 20).build()
+                }).bounds(centerX - 110, centerY - 12, 220, 20).build()
+        );
+
+        this.addRenderableWidget(
+                Button.builder(hudButtonText(), button -> {
+                    PerformanceConfig.showPerformanceHud =
+                            !PerformanceConfig.showPerformanceHud;
+                    PerformanceConfig.save();
+                    button.setMessage(hudButtonText());
+                }).bounds(centerX - 110, centerY + 14, 220, 20).build()
         );
 
         this.addRenderableWidget(
                 Button.builder(Component.literal("Done"), button -> this.onClose())
-                        .bounds(centerX - 105, centerY + 25, 210, 20)
+                        .bounds(centerX - 110, centerY + 44, 220, 20)
                         .build()
         );
     }
@@ -39,6 +47,13 @@ public final class PerformanceConfigScreen extends Screen {
         return Component.literal(
                 "Ambient Particle Reduction: "
                         + (PerformanceConfig.reduceAmbientParticles ? "ON" : "OFF")
+        );
+    }
+
+    private static Component hudButtonText() {
+        return Component.literal(
+                "Performance HUD: "
+                        + (PerformanceConfig.showPerformanceHud ? "ON" : "OFF")
         );
     }
 
@@ -54,9 +69,9 @@ public final class PerformanceConfigScreen extends Screen {
         );
         graphics.drawCenteredString(
                 this.font,
-                Component.literal("Reduces selected decorative particles."),
+                Component.literal("Toggle lightweight client-side options."),
                 this.width / 2,
-                this.height / 2 - 30,
+                this.height / 2 - 32,
                 0xFFB8E0FF
         );
         super.render(graphics, mouseX, mouseY, delta);
