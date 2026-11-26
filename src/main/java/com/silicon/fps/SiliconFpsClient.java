@@ -1,5 +1,6 @@
 package com.silicon.fps;
 
+import com.silicon.fps.render.SiliconRenderEngine;
 import net.fabricmc.api.ClientModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,10 @@ public class SiliconFpsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         PerformanceConfig.load();
+        SiliconRenderEngine.initialize();
         PerformanceHud.register();
         PerformanceControls.register();
         LOGGER.info("SILICON FPS initialized successfully!");
+        LOGGER.info("SILICON Render Engine telemetry initialized (vanilla backend retained).");
     }
 }
