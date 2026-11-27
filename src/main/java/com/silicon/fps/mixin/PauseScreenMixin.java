@@ -1,7 +1,6 @@
 package com.silicon.fps.mixin;
 
 import com.silicon.fps.PauseHubScreen;
-import com.silicon.fps.PerformanceConfigScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.PauseScreen;
@@ -20,27 +19,11 @@ public abstract class PauseScreenMixin extends Screen {
     }
 
     @Inject(method = "init", at = @At("TAIL"))
-    private void siliconfps$addPauseControls(CallbackInfo ci) {
-        int right = this.width - 12;
-        int buttonWidth = Math.min(86, Math.max(62, (this.width - 28) / 4));
-        int gap = 5;
-        int x = right - (buttonWidth * 3 + gap * 2);
-        int y = 12;
-
-        this.addRenderableWidget(Button.builder(Component.literal("ACCOUNTS"),
-                button -> this.minecraft.setScreen(new PauseHubScreen(this, PauseHubScreen.Tab.ACCOUNTS)))
-                .bounds(x, y, buttonWidth, 20).build());
-        this.addRenderableWidget(Button.builder(Component.literal("WARDROBE"),
-                button -> this.minecraft.setScreen(new PauseHubScreen(this, PauseHubScreen.Tab.WARDROBE)))
-                .bounds(x + buttonWidth + gap, y, buttonWidth, 20).build());
-        this.addRenderableWidget(Button.builder(Component.literal("PERFORMANCE"),
-                button -> this.minecraft.setScreen(new PerformanceConfigScreen(this)))
-                .bounds(x + (buttonWidth + gap) * 2, y, buttonWidth, 20).build());
-
-        int moduleWidth = Math.min(200, Math.max(120, this.width / 4));
-        this.addRenderableWidget(Button.builder(Component.literal("SILICON MODULES"),
+    private void siliconfps$addHubButton(CallbackInfo ci) {
+        int buttonWidth = Math.min(112, Math.max(82, this.width / 5));
+        this.addRenderableWidget(Button.builder(Component.literal("SILICON HUB"),
                 button -> this.minecraft.setScreen(new PauseHubScreen(this, PauseHubScreen.Tab.MODULES)))
-                .bounds(this.width / 2 - moduleWidth / 2, this.height - 43, moduleWidth, 20).build());
+                .bounds(this.width - buttonWidth - 12, 12, buttonWidth, 20).build());
     }
 
     @Inject(method = "render", at = @At("TAIL"))
@@ -56,9 +39,6 @@ public abstract class PauseScreenMixin extends Screen {
         graphics.drawCenteredString(this.font, "PLAYER PROFILE", left + boxWidth / 2, top + 10, 0xFFD8C8F4);
         graphics.drawCenteredString(this.font, this.minecraft.player.getGameProfile().name(),
                 left + boxWidth / 2, top + boxHeight - 18, 0xFFB9A8D5);
-
-        // Uses the live client player: the actual account skin and Steve/Alex model
-        // are rendered by Minecraft's own entity renderer. Pointer movement rotates it.
         InventoryScreen.renderEntityInInventoryFollowsMouse(
                 graphics, left + 8, top + 30, left + boxWidth - 8, top + boxHeight - 28,
                 72, 0.0F, mouseX, mouseY, this.minecraft.player);
