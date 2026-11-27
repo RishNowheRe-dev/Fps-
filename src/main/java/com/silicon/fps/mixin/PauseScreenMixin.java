@@ -108,15 +108,15 @@ public abstract class PauseScreenMixin extends Screen {
 
         var player = this.minecraft.player;
         int left = 14;
-        int top = Math.max(38, this.height / 2 - 78);
+        int profileTop = Math.max(38, this.height / 2 - 78);
         int boxWidth = Math.min(132, Math.max(92, this.width / 4));
-        int boxHeight = Math.min(174, this.height - top - 12);
+        int boxHeight = Math.min(174, this.height - profileTop - 12);
 
-        graphics.fill(left, top, left + boxWidth, top + boxHeight, 0xC9000000);
-        graphics.fill(left, top, left + boxWidth, top + 2, 0xFFB8C0CC);
-        graphics.drawCenteredString(this.font, "PLAYER PROFILE", left + boxWidth / 2, top + 9, 0xFFE0E4EA);
+        graphics.fill(left, profileTop, left + boxWidth, profileTop + boxHeight, 0xC9000000);
+        graphics.fill(left, profileTop, left + boxWidth, profileTop + 2, 0xFFB8C0CC);
+        graphics.drawCenteredString(this.font, "PLAYER PROFILE", left + boxWidth / 2, profileTop + 9, 0xFFE0E4EA);
         graphics.drawCenteredString(this.font, player.getGameProfile().name(),
-                left + boxWidth / 2, top + boxHeight - 14, 0xFFB8C0CC);
+                left + boxWidth / 2, profileTop + boxHeight - 14, 0xFFB8C0CC);
 
         ItemStack[] equipment = {
                 player.getItemBySlot(EquipmentSlot.HEAD),
@@ -133,7 +133,7 @@ public abstract class PauseScreenMixin extends Screen {
         try {
             for (EquipmentSlot slot : slots) player.setItemSlot(slot, ItemStack.EMPTY);
             InventoryScreen.renderEntityInInventoryFollowsMouse(
-                    graphics, left + 7, top + 27, left + boxWidth - 7, top + boxHeight - 21,
+                    graphics, left + 7, profileTop + 27, left + boxWidth - 7, profileTop + boxHeight - 21,
                     58, 0.0F, mouseX, mouseY, player);
         } finally {
             for (int i = 0; i < slots.length; i++) player.setItemSlot(slots[i], equipment[i]);
