@@ -27,9 +27,9 @@ public final class PerformanceConfigScreen extends Screen {
     }
 
     private int panelTop() { return 74; }
-    private int panelBottom() { return this.height - 34; }
+    private int panelBottom() { return this.height - 42; }
     private int sectionTop() { return panelTop() + 42 + 42 + 10; }
-    private int sectionBottom() { return panelBottom() - 10; }
+    private int sectionBottom() { return panelBottom() - 58; }
 
     @Override
     protected void init() {
@@ -49,7 +49,7 @@ public final class PerformanceConfigScreen extends Screen {
         int panelWidth = Math.min(560, this.width - 24);
         int buttonWidth = Math.min(360, panelWidth - 36);
         int buttonLeft = centerX - buttonWidth / 2;
-        int actionY = sectionBottom() - 51;
+        int actionY = panelBottom() - 48;
 
         switch (selectedTab) {
             case GENERAL -> {
@@ -68,7 +68,7 @@ public final class PerformanceConfigScreen extends Screen {
                 PerformanceConfig.reduceAmbientParticles = !PerformanceConfig.reduceAmbientParticles;
                 PerformanceConfig.save();
                 button.setMessage(particleButtonText());
-            }).bounds(buttonLeft, sectionBottom() - 27, buttonWidth, 21).build());
+            }).bounds(buttonLeft, panelBottom() - 24, buttonWidth, 21).build());
             case ADVANCED -> this.addRenderableWidget(Button.builder(hudButtonText(), button -> {
                 PerformanceConfig.showPerformanceHud = !PerformanceConfig.showPerformanceHud;
                 PerformanceConfig.save();
@@ -77,7 +77,7 @@ public final class PerformanceConfigScreen extends Screen {
         }
 
         this.addRenderableWidget(Button.builder(Component.literal("CLOSE CONTROL CENTER"), button -> this.onClose())
-                .bounds(centerX - Math.min(150, panelWidth / 2 - 12), this.height - 26,
+                .bounds(centerX - Math.min(150, panelWidth / 2 - 12), this.height - 25,
                         Math.min(300, panelWidth - 24), 20).build());
     }
 
@@ -93,6 +93,24 @@ public final class PerformanceConfigScreen extends Screen {
     private static Component hudButtonText() {
         return Component.literal("PERFORMANCE HUD  [" +
                 (PerformanceConfig.showPerformanceHud ? "ON" : "OFF") + "]");
+    }
+
+    private void drawWrapped(GuiGraphics graphics, String text, int x, int y, int maxWidth, int color) {
+        StringBuilder line = new StringBuilder();
+        int lineY = y;
+        for (String word : text.split(" ")) {
+            String candidate = line.length() == 0 ? word : line + " " + word;
+            if (this.font.width(candidate) > maxWidth && line.length() > 0) {
+                graphics.drawString(this.font, line.toString(), x, lineY, color);
+                lineY += 12;
+                line.setLength(0);
+                line.append(word);
+            } else {
+                if (line.length() > 0) line.append(' ');
+                line.append(word);
+            }
+        }
+        if (line.length() > 0) graphics.drawString(this.font, line.toString(), x, lineY, color);
     }
 
     private static void rounded(GuiGraphics g, int x, int y, int width, int height, int radius, int color) {
@@ -170,25 +188,25 @@ public final class PerformanceConfigScreen extends Screen {
         switch (selectedTab) {
             case GENERAL -> {
                 graphics.drawString(this.font, "LOW-END DEVICE PROFILE", textX, contentY, WHITE);
-                graphics.drawString(this.font, "2 chunks; minimal particles; clouds, AO and shadows off.",
-                        textX, contentY + 16, MUTED);
-                graphics.drawString(this.font, "Player visibility and simulation distance are preserved.",
-                        textX, contentY + 32, MUTED);
+                drawWrapped(graphics, "2 chunks; minimal particles; clouds, AO and shadows off.",
+                        textX, contentY + 16, innerWidth - 28, MUTED);
+                drawWrapped(graphics, "Player visibility and simulation distance are preserved.",
+                        textX, contentY + 38, innerWidth - 28, MUTED);
             }
             case QUALITY -> {
                 graphics.drawString(this.font, "VISUAL QUALITY", textX, contentY, WHITE);
-                graphics.drawString(this.font, "Additional rendering controls are not implemented yet.",
-                        textX, contentY + 16, MUTED);
+                drawWrapped(graphics, "Additional rendering controls are not implemented yet.",
+                        textX, contentY + 16, innerWidth - 28, MUTED);
             }
             case PERFORMANCE -> {
                 graphics.drawString(this.font, "AMBIENT PARTICLE REDUCTION", textX, contentY, WHITE);
-                graphics.drawString(this.font, "Only selected decorative particles are reduced.",
-                        textX, contentY + 16, MUTED);
+                drawWrapped(graphics, "Only selected decorative particles are reduced.",
+                        textX, contentY + 16, innerWidth - 28, MUTED);
             }
             case ADVANCED -> {
                 graphics.drawString(this.font, "DIAGNOSTICS", textX, contentY, WHITE);
-                graphics.drawString(this.font, "Toggle the lightweight FPS and memory overlay.",
-                        textX, contentY + 16, MUTED);
+                drawWrapped(graphics, "Toggle the lightweight FPS and memory overlay.",
+                        textX, contentY + 16, innerWidth - 28, MUTED);
             }
         }
 
