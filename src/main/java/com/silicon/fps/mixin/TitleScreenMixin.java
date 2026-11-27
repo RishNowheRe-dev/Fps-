@@ -68,10 +68,10 @@ public abstract class TitleScreenMixin extends Screen {
 
         // Paint over the vanilla logo/splash in the header zone; the panorama remains visible outside the panel.
         graphics.fill(panelLeft + 2, panelTop + 2, panelLeft + panelWidth - 2, startY - 10, 0xF20A0811);
-        graphics.fill(panelLeft + 24, panelTop + 22, panelLeft + panelWidth - 24, panelTop + 23, 0xFF9D79D0);
+        graphics.fill(panelLeft + 24, panelTop + 22, panelLeft + panelWidth - 24, panelTop + 23, 0xFFB8C0CC);
         graphics.drawCenteredString(this.font, "S I L I C O N", center, panelTop + 39, 0xFFE6D8FF);
-        graphics.drawCenteredString(this.font, "PERFORMANCE CLIENT", center, panelTop + 56, 0xFFBDA9D8);
-        graphics.drawCenteredString(this.font, "A LIGHTWEIGHT CLIENT EXPERIENCE", center, panelTop + 73, 0xFF81748F);
+        graphics.drawCenteredString(this.font, "PERFORMANCE CLIENT", center, panelTop + 56, 0xFFC0C6D0);
+        graphics.drawCenteredString(this.font, "A LIGHTWEIGHT CLIENT EXPERIENCE", center, panelTop + 73, 0xFF8D96A3);
         graphics.fill(panelLeft + 64, panelTop + 91, panelLeft + panelWidth - 64, panelTop + 92, 0x663F2D58);
 
         drawButton(graphics, "SINGLEPLAYER", left, startY, buttonWidth, h, mouseX, mouseY);
@@ -82,18 +82,18 @@ public abstract class TitleScreenMixin extends Screen {
                 half, h, mouseX, mouseY);
 
         graphics.drawCenteredString(this.font, "SILICON FPS  •  CLIENT SIDE", center,
-                Math.min(this.height - 20, panelTop + 286), 0xFF8F7AAE);
+                Math.min(this.height - 20, panelTop + 286), 0xFFAEB7C3);
     }
 
     private void drawButton(GuiGraphics graphics, String label, int x, int y, int width, int height,
                             int mouseX, int mouseY) {
         boolean hovered = mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
-        int border = hovered ? 0xFFDCC4FF : 0xFF6C568A;
-        int fill = hovered ? 0xFF30233E : 0xFF17121F;
+        int border = hovered ? 0xFFE4E8EF : 0xFF66717F;
+        int fill = hovered ? 0xFF303943 : 0xFF171C23;
         graphics.fill(x, y, x + width, y + height, border);
         graphics.fill(x + 1, y + 1, x + width - 1, y + height - 1, fill);
-        graphics.fill(x + 7, y + 5, x + 9, y + height - 5, hovered ? 0xFFE2CAFF : 0xFF9D79D0);
+        graphics.fill(x + 7, y + 5, x + 9, y + height - 5, hovered ? 0xFFE7EBF1 : 0xFFB8C0CC);
         graphics.drawCenteredString(this.font, label, x + width / 2, y + (height - 8) / 2,
-                hovered ? 0xFFFFFFFF : 0xFFE1D8ED);
+                hovered ? 0xFFFFFFFF : 0xFFE1E5EA);
     }
 }
