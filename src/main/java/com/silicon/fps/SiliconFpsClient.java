@@ -15,6 +15,7 @@ public class SiliconFpsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         PerformanceConfig.load();
+        SiliconScreenTheme.register();
         SiliconRenderEngine.initialize();
         PerformanceHud.register();
         PerformanceControls.register();
