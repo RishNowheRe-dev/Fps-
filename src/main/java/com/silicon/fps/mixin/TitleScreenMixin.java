@@ -1,6 +1,7 @@
 package com.silicon.fps.mixin;
 
 import com.silicon.fps.PauseHubScreen;
+import com.silicon.fps.SiliconPlayerPreview;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/** SILICON title screen: retains vanilla navigation actions, replaces its visual presentation. */
+/** SILICON title screen: vanilla actions with a landscape and live account-skin preview. */
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
     protected TitleScreenMixin() {
@@ -25,12 +26,12 @@ public abstract class TitleScreenMixin extends Screen {
     private void siliconfps$buildMainMenu(CallbackInfo ci) {
         this.clearWidgets();
 
-        int center = this.width / 2;
-        int panelWidth = Math.min(470, this.width - 28);
-        int buttonWidth = Math.min(280, panelWidth - 48);
+        int panelWidth = Math.min(430, this.width - 24);
+        int panelLeft = this.width - panelWidth - 14;
+        int buttonWidth = Math.min(280, panelWidth - 42);
         int buttonHeight = 22;
         int gap = 6;
-        int left = center - buttonWidth / 2;
+        int left = panelLeft + (panelWidth - buttonWidth) / 2;
         int startY = Math.max(150, Math.min(this.height - 132, this.height / 2 - 18));
 
         this.addRenderableWidget(Button.builder(Component.literal("SINGLEPLAYER"),
@@ -55,24 +56,22 @@ public abstract class TitleScreenMixin extends Screen {
     @Inject(method = "render", at = @At("TAIL"))
     private void siliconfps$renderCustomMainMenu(GuiGraphics graphics, int mouseX, int mouseY,
                                                    float delta, CallbackInfo ci) {
-        int center = this.width / 2;
-        int panelWidth = Math.min(470, this.width - 28);
-        int panelLeft = center - panelWidth / 2;
+        int panelWidth = Math.min(430, this.width - 24);
+        int panelLeft = this.width - panelWidth - 14;
         int panelTop = (this.height - Math.min(310, this.height - 24)) / 2;
-        int buttonWidth = Math.min(280, panelWidth - 48);
-        int left = center - buttonWidth / 2;
+        int panelCenter = panelLeft + panelWidth / 2;
+        int buttonWidth = Math.min(280, panelWidth - 42);
+        int left = panelLeft + (panelWidth - buttonWidth) / 2;
         int startY = Math.max(150, Math.min(this.height - 132, this.height / 2 - 18));
         int h = 22;
         int gap = 6;
         int half = (buttonWidth - gap) / 2;
 
-        // Paint over the vanilla logo/splash in the header zone; the panorama remains visible outside the panel.
-        graphics.fill(panelLeft + 2, panelTop + 2, panelLeft + panelWidth - 2, startY - 10, 0xF20A0811);
-        graphics.fill(panelLeft + 24, panelTop + 22, panelLeft + panelWidth - 24, panelTop + 23, 0xFFB8C0CC);
-        graphics.drawCenteredString(this.font, "S I L I C O N", center, panelTop + 39, 0xFFE6D8FF);
-        graphics.drawCenteredString(this.font, "PERFORMANCE CLIENT", center, panelTop + 56, 0xFFC0C6D0);
-        graphics.drawCenteredString(this.font, "A LIGHTWEIGHT CLIENT EXPERIENCE", center, panelTop + 73, 0xFF8D96A3);
-        graphics.fill(panelLeft + 64, panelTop + 91, panelLeft + panelWidth - 64, panelTop + 92, 0x663F2D58);
+        graphics.fill(panelLeft, panelTop, panelLeft + panelWidth, panelTop + 310, 0xD9090D14);
+        graphics.fill(panelLeft + 20, panelTop + 20, panelLeft + panelWidth - 20, panelTop + 21, 0xFFB8C0CC);
+        graphics.drawCenteredString(this.font, "S I L I C O N", panelCenter, panelTop + 37, 0xFFE6D8FF);
+        graphics.drawCenteredString(this.font, "PERFORMANCE CLIENT", panelCenter, panelTop + 54, 0xFFC0C6D0);
+        graphics.drawCenteredString(this.font, "A LIGHTWEIGHT CLIENT EXPERIENCE", panelCenter, panelTop + 71, 0xFF8D96A3);
 
         drawButton(graphics, "SINGLEPLAYER", left, startY, buttonWidth, h, mouseX, mouseY);
         drawButton(graphics, "MULTIPLAYER", left, startY + h + gap, buttonWidth, h, mouseX, mouseY);
@@ -81,7 +80,21 @@ public abstract class TitleScreenMixin extends Screen {
         drawButton(graphics, "QUIT GAME", left + half + gap, startY + (h + gap) * 3,
                 half, h, mouseX, mouseY);
 
-        graphics.drawCenteredString(this.font, "SILICON FPS  •  CLIENT SIDE", center,
+        int previewLeft = Math.max(12, this.width / 10);
+        int previewRight = Math.min(panelLeft - 10, this.width * 43 / 100);
+        int previewTop = Math.max(42, this.height / 2 - 112);
+        int previewBottom = Math.min(this.height - 38, this.height / 2 + 112);
+        if (previewRight - previewLeft >= 72 && previewBottom - previewTop >= 100) {
+            graphics.fill(previewLeft - 8, previewTop - 12, previewRight + 8, previewBottom + 12, 0x55050910);
+            graphics.fill(previewLeft - 12, previewBottom + 8, previewRight + 12, previewBottom + 14, 0xFF202A35);
+            graphics.fill(previewLeft - 8, previewBottom + 5, previewRight + 8, previewBottom + 9, 0xFF596575);
+            SiliconPlayerPreview.render(graphics, previewLeft, previewTop, previewRight, previewBottom,
+                    mouseX, mouseY, delta);
+            graphics.drawCenteredString(this.font, "YOUR PLAYER", (previewLeft + previewRight) / 2,
+                    previewTop - 9, 0xFFE1E5EA);
+        }
+
+        graphics.drawCenteredString(this.font, "SILICON FPS  •  CLIENT SIDE", panelCenter,
                 Math.min(this.height - 20, panelTop + 286), 0xFFAEB7C3);
     }
 
