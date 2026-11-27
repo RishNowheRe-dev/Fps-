@@ -42,19 +42,19 @@ public final class PauseHubScreen extends Screen {
                 PerformanceConfig.reduceAmbientParticles = !PerformanceConfig.reduceAmbientParticles;
                 PerformanceConfig.save();
                 button.setMessage(ambientText());
-            }).bounds(actionLeft, panelTop + 122, actionWidth, 22).build());
+            }).bounds(actionLeft, panelTop + 145, actionWidth, 22).build());
 
             this.addRenderableWidget(Button.builder(hudText(), button -> {
                 PerformanceConfig.showPerformanceHud = !PerformanceConfig.showPerformanceHud;
                 PerformanceConfig.save();
                 button.setMessage(hudText());
-            }).bounds(actionLeft, panelTop + 151, actionWidth, 22).build());
+            }).bounds(actionLeft, panelTop + 174, actionWidth, 22).build());
 
             this.addRenderableWidget(Button.builder(Component.literal("APPLY POTATO MODE"),
                     button -> {
                         PerformanceConfig.applyLowEndPreset(this.minecraft);
                         this.rebuildWidgets();
-                    }).bounds(actionLeft, panelTop + 180, actionWidth, 22).build());
+                    }).bounds(actionLeft, panelTop + 203, actionWidth, 22).build());
         }
 
         this.addRenderableWidget(Button.builder(Component.literal("OPEN PERFORMANCE CONTROL CENTER"),
@@ -102,7 +102,7 @@ public final class PauseHubScreen extends Screen {
                 graphics.drawCenteredString(this.font, "Potato Mode lowers visual workload while preserving player visibility.",
                         this.width / 2, top + 119, 0xFF91869F);
                 graphics.drawCenteredString(this.font, "Preset status: " + (PerformanceConfig.lowEndPresetApplied ? "APPLIED" : "NOT APPLIED"),
-                        this.width / 2, top + 224, 0xFFD8BFFF);
+                        this.width / 2, top + 239, 0xFFD8BFFF);
             }
             case ACCOUNTS -> {
                 graphics.drawCenteredString(this.font, "ACCOUNT MANAGER", this.width / 2, top + 103, 0xFFFFFFFF);
