@@ -3,7 +3,8 @@
   "package": "com.silicon.fps.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "AmbientParticleMixin"
+    "AmbientParticleMixin",
+    "PauseScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
