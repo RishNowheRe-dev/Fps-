@@ -84,7 +84,7 @@ public final class PauseHubScreen extends Screen {
         graphics.fill(0, 0, this.width, this.height, 0xB8000000);
 
         int panelWidth = Math.min(500, this.width - 24);
-        int panelHeight = Math.min(290, this.height - 24);
+        int panelHeight = Math.min(360, this.height - 24);
         int left = (this.width - panelWidth) / 2;
         int top = (this.height - panelHeight) / 2;
         graphics.fill(left, top, left + panelWidth, top + panelHeight, 0xF5000000);
