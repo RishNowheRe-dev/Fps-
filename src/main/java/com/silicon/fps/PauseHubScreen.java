@@ -21,6 +21,8 @@ public final class PauseHubScreen extends Screen {
     @Override
     protected void init() {
         int center = this.width / 2;
+        int panelHeight = Math.min(360, this.height - 24);
+        int panelTop = (this.height - panelHeight) / 2;
         int tabWidth = Math.min(112, Math.max(72, (this.width - 48) / 3));
         int gap = 5;
         int start = center - (tabWidth * 3 + gap * 2) / 2;
@@ -30,7 +32,7 @@ public final class PauseHubScreen extends Screen {
             String label = (selected == tab ? "◆ " : "") + selected.name();
             this.addRenderableWidget(Button.builder(Component.literal(label),
                     button -> this.minecraft.setScreen(new PauseHubScreen(parent, selected)))
-                    .bounds(start + i * (tabWidth + gap), 54, tabWidth, 20).build());
+                    .bounds(start + i * (tabWidth + gap), panelTop + 50, tabWidth, 20).build());
         }
 
         int actionWidth = Math.min(230, this.width - 40);
@@ -40,30 +42,30 @@ public final class PauseHubScreen extends Screen {
                 PerformanceConfig.reduceAmbientParticles = !PerformanceConfig.reduceAmbientParticles;
                 PerformanceConfig.save();
                 button.setMessage(ambientText());
-            }).bounds(actionLeft, 135, actionWidth, 22).build());
+            }).bounds(actionLeft, panelTop + 122, actionWidth, 22).build());
 
             this.addRenderableWidget(Button.builder(hudText(), button -> {
                 PerformanceConfig.showPerformanceHud = !PerformanceConfig.showPerformanceHud;
                 PerformanceConfig.save();
                 button.setMessage(hudText());
-            }).bounds(actionLeft, 164, actionWidth, 22).build());
+            }).bounds(actionLeft, panelTop + 151, actionWidth, 22).build());
 
             this.addRenderableWidget(Button.builder(Component.literal("APPLY POTATO MODE"),
                     button -> {
                         PerformanceConfig.applyLowEndPreset(this.minecraft);
                         this.rebuildWidgets();
-                    }).bounds(actionLeft, 193, actionWidth, 22).build());
+                    }).bounds(actionLeft, panelTop + 180, actionWidth, 22).build());
         }
 
         this.addRenderableWidget(Button.builder(Component.literal("OPEN PERFORMANCE CONTROL CENTER"),
                 button -> this.minecraft.setScreen(new PerformanceConfigScreen(this)))
-                .bounds(center - Math.min(150, actionWidth / 2), this.height - 69,
+                .bounds(center - Math.min(150, actionWidth / 2), panelTop + panelHeight - 72,
                         Math.min(300, actionWidth), 22).build());
 
         this.addRenderableWidget(Button.builder(Component.literal(parent instanceof net.minecraft.client.gui.screens.TitleScreen
                         ? "BACK TO TITLE" : "BACK TO GAME"),
                 button -> this.onClose())
-                .bounds(center - 95, this.height - 39, 190, 20).build());
+                .bounds(center - 95, panelTop + panelHeight - 43, 190, 20).build());
     }
 
     private static Component ambientText() {
