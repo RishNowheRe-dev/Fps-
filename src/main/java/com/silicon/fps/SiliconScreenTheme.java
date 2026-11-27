@@ -31,6 +31,7 @@ public final class SiliconScreenTheme {
         drawMoon(g, w, h);
         drawMountains(g, w, h);
         drawAtmosphere(g, w, h);
+        drawPlayerLedge(g, w, h);
 
         // Subtle charcoal glass surface; the landscape remains visible through it.
         int panelWidth = Math.min(screen instanceof TitleScreen ? 470 : 520, w - 28);
@@ -117,6 +118,32 @@ public final class SiliconScreenTheme {
             g.fill(0, y, w, y + 1, 0x0ECCD5E0);
         }
         g.fill(0, h - 2, w, h, 0xFF080D15);
+    }
+
+
+    /**
+     * A broad, raised stone shelf reserves a readable silhouette area for the
+     * independently rendered account avatar on the left side of menu screens.
+     */
+    private static void drawPlayerLedge(GuiGraphics g, int w, int h) {
+        int edge = Math.max(1, w * 44 / 100);
+        int top = h * 4 / 5;
+        g.fill(0, top, edge, h, 0xFF111923);
+        g.fill(0, top, edge, top + 3, 0xFF596574);
+        g.fill(0, top + 3, edge, top + 7, 0xFF303B48);
+        int step = Math.max(12, w / 24);
+        for (int x = 0; x < edge; x += step) {
+            int blockTop = top + 7 + ((x / step) % 3) * Math.max(2, h / 90);
+            int blockRight = Math.min(edge, x + step);
+            g.fill(x, blockTop, blockRight, Math.min(h, blockTop + 2), 0xFF65717D);
+            g.fill(x + 1, blockTop + 2, Math.max(x + 2, blockRight - 1),
+                    Math.min(h, blockTop + Math.max(7, h / 22)), 0xFF202A35);
+            g.fill(x, Math.min(h - 1, blockTop + Math.max(7, h / 22)),
+                    blockRight, Math.min(h, blockTop + Math.max(8, h / 22)), 0xFF0A111A);
+        }
+        // A clean upper surface keeps the avatar's feet visually grounded.
+        g.fill(0, top - 2, edge, top, 0xFF87919B);
+        g.fill(0, top - 1, edge, top, 0xFF424E5B);
     }
 
     private static int mix(int a, int b, float t) {
