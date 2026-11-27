@@ -115,6 +115,46 @@ public final class PauseHubScreen extends Screen {
             }
         }
         super.render(graphics, mouseX, mouseY, delta);
+
+        int center = this.width / 2;
+        int panelHeight = Math.min(360, this.height - 24);
+        int panelTop = (this.height - panelHeight) / 2;
+        int tabWidth = Math.min(112, Math.max(72, (this.width - 48) / 3));
+        int gap = 5;
+        int tabStart = center - (tabWidth * 3 + gap * 2) / 2;
+        Tab[] tabs = Tab.values();
+        for (int i = 0; i < tabs.length; i++) {
+            String label = (tabs[i] == tab ? "◆ " : "") + tabs[i].name();
+            drawSiliconButton(graphics, label, tabStart + i * (tabWidth + gap),
+                    panelTop + 50, tabWidth, 20, mouseX, mouseY);
+        }
+        int actionWidth = Math.min(230, this.width - 40);
+        int actionLeft = center - actionWidth / 2;
+        if (tab == Tab.MODULES) {
+            drawSiliconButton(graphics, ambientText().getString(), actionLeft, panelTop + 145,
+                    actionWidth, 22, mouseX, mouseY);
+            drawSiliconButton(graphics, hudText().getString(), actionLeft, panelTop + 174,
+                    actionWidth, 22, mouseX, mouseY);
+            drawSiliconButton(graphics, "APPLY POTATO MODE", actionLeft, panelTop + 203,
+                    actionWidth, 22, mouseX, mouseY);
+        }
+        drawSiliconButton(graphics, "OPEN PERFORMANCE CONTROL CENTER",
+                center - Math.min(150, actionWidth / 2), panelTop + panelHeight - 72,
+                Math.min(300, actionWidth), 22, mouseX, mouseY);
+        drawSiliconButton(graphics, parent instanceof net.minecraft.client.gui.screens.TitleScreen
+                        ? "BACK TO TITLE" : "BACK TO GAME",
+                center - 95, panelTop + panelHeight - 43, 190, 20, mouseX, mouseY);
+    }
+
+    private void drawSiliconButton(GuiGraphics graphics, String label, int x, int y, int width,
+                                   int height, int mouseX, int mouseY) {
+        boolean hovered = mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
+        graphics.fill(x, y, x + width, y + height, hovered ? 0xFFDCC4FF : 0xFF6C568A);
+        graphics.fill(x + 1, y + 1, x + width - 1, y + height - 1,
+                hovered ? 0xFF30233E : 0xFF17121F);
+        graphics.fill(x + 6, y + 5, x + 8, y + height - 5, hovered ? 0xFFE2CAFF : 0xFF9D79D0);
+        graphics.drawCenteredString(this.font, label, x + width / 2, y + (height - 8) / 2,
+                hovered ? 0xFFFFFFFF : 0xFFE1D8ED);
     }
 
     @Override
