@@ -5,13 +5,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.PauseScreen;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 
-/**
- * First layer of the SILICON global menu theme.
- * Keeps vanilla screen logic and widgets intact while introducing the shared
- * pitch-black / lavender visual treatment behind menu content.
- */
+/** Applies the SILICON backdrop only to the two screens with designed panels. */
 public final class SiliconScreenTheme {
     private static final int LAVENDER = 0x887F5AA8;
 
@@ -20,12 +15,9 @@ public final class SiliconScreenTheme {
 
     public static void register() {
         ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
-            if (screen instanceof AbstractContainerScreen<?> || screen instanceof PerformanceConfigScreen) {
-                return;
-            }
+            if (!(screen instanceof TitleScreen) && !(screen instanceof PauseScreen)) return;
             ScreenEvents.afterBackground(screen).register(
-                    (current, graphics, mouseX, mouseY, tickDelta) ->
-                            renderThemeLayer(current, graphics)
+                    (current, graphics, mouseX, mouseY, tickDelta) -> renderThemeLayer(current, graphics)
             );
         });
     }
@@ -33,20 +25,16 @@ public final class SiliconScreenTheme {
     private static void renderThemeLayer(Screen screen, GuiGraphics graphics) {
         int width = screen.width;
         int height = screen.height;
+        graphics.fill(0, 0, width, height, 0x35000000);
 
-        // A translucent black veil preserves the vanilla scene while unifying menus.
-        graphics.fill(0, 0, width, height, 0x55000000);
-
-        if (screen instanceof TitleScreen || screen instanceof PauseScreen) {
-            int panelWidth = Math.min(520, width - 32);
-            int panelHeight = Math.min(screen instanceof TitleScreen ? 300 : 250, height - 36);
-            int left = (width - panelWidth) / 2;
-            int top = (height - panelHeight) / 2;
-            roundedPanel(graphics, left, top, panelWidth, panelHeight, 12, LAVENDER);
-            roundedPanel(graphics, left + 1, top + 1, panelWidth - 2,
-                    panelHeight - 2, 11, 0xA9000000);
-            graphics.fill(left + 18, top + 12, left + panelWidth - 18, top + 13, 0xAA9F79D2);
-        }
+        int panelWidth = Math.min(520, width - 32);
+        int panelHeight = Math.min(screen instanceof TitleScreen ? 300 : 250, height - 36);
+        int left = (width - panelWidth) / 2;
+        int top = (height - panelHeight) / 2;
+        roundedPanel(graphics, left, top, panelWidth, panelHeight, 12, LAVENDER);
+        roundedPanel(graphics, left + 1, top + 1, panelWidth - 2,
+                panelHeight - 2, 11, 0xA9000000);
+        graphics.fill(left + 18, top + 12, left + panelWidth - 18, top + 13, 0xAA9F79D2);
     }
 
     private static void roundedPanel(GuiGraphics graphics, int x, int y, int width,
