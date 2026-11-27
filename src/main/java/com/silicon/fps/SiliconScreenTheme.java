@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.gui.screens.GameMenuScreen;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 
 /**
@@ -37,7 +37,7 @@ public final class SiliconScreenTheme {
         // A translucent black veil preserves the vanilla scene while unifying menus.
         graphics.fill(0, 0, width, height, 0x55000000);
 
-        if (screen instanceof TitleScreen || screen instanceof GameMenuScreen) {
+        if (screen instanceof TitleScreen || screen instanceof PauseScreen) {
             int panelWidth = Math.min(520, width - 32);
             int panelHeight = Math.min(screen instanceof TitleScreen ? 300 : 250, height - 36);
             int left = (width - panelWidth) / 2;
