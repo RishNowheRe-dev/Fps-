@@ -3,7 +3,7 @@ package com.silicon.fps.mixin;
 import com.silicon.fps.PauseHubScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.OptionsScreen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
@@ -55,7 +55,7 @@ public abstract class PauseScreenMixin extends Screen {
                 .bounds(mainLeft + half + rowGap, top + 53, half, smallHeight).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("DISCONNECT"),
-                button -> this.minecraft.disconnect(new TitleScreen()))
+                button -> this.minecraft.disconnect(new TitleScreen(), false))
                 .bounds(mainLeft, top + 78, mainWidth, 22).build());
 
         int tabWidth = Math.min(66, Math.max(48, (this.width - 24) / 4));
