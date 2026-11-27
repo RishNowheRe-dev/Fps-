@@ -89,9 +89,9 @@ public abstract class PauseScreenMixin extends Screen {
         int top = Math.max(48, this.height / 2 - 54);
         int half = (mainWidth - 5) / 2;
         graphics.fill(menuLeft, menuTop, menuLeft + menuWidth, menuTop + 230, 0xE9090710);
-        graphics.fill(menuLeft + 16, menuTop + 18, menuLeft + menuWidth - 16, menuTop + 19, 0xFF9D79D0);
+        graphics.fill(menuLeft + 16, menuTop + 18, menuLeft + menuWidth - 16, menuTop + 19, 0xFFB8C0CC);
         graphics.drawCenteredString(this.font, "S I L I C O N", center + 26, menuTop + 30, 0xFFE6D8FF);
-        graphics.drawCenteredString(this.font, "GAME MENU", center + 26, menuTop + 45, 0xFFBDA9D8);
+        graphics.drawCenteredString(this.font, "GAME MENU", center + 26, menuTop + 45, 0xFFC0C6D0);
         siliconfps$drawButton(graphics, "BACK TO GAME", mainLeft, top, mainWidth, 22, mouseX, mouseY);
         siliconfps$drawButton(graphics, "ADVANCEMENTS", mainLeft, top + 28, half, 20, mouseX, mouseY);
         siliconfps$drawButton(graphics, "STATISTICS", mainLeft + half + 5, top + 28, half, 20, mouseX, mouseY);
@@ -113,10 +113,10 @@ public abstract class PauseScreenMixin extends Screen {
         int boxHeight = Math.min(174, this.height - top - 12);
 
         graphics.fill(left, top, left + boxWidth, top + boxHeight, 0xC9000000);
-        graphics.fill(left, top, left + boxWidth, top + 2, 0xFF9D79D0);
-        graphics.drawCenteredString(this.font, "PLAYER PROFILE", left + boxWidth / 2, top + 9, 0xFFD8C8F4);
+        graphics.fill(left, top, left + boxWidth, top + 2, 0xFFB8C0CC);
+        graphics.drawCenteredString(this.font, "PLAYER PROFILE", left + boxWidth / 2, top + 9, 0xFFE0E4EA);
         graphics.drawCenteredString(this.font, player.getGameProfile().name(),
-                left + boxWidth / 2, top + boxHeight - 14, 0xFFB9A8D5);
+                left + boxWidth / 2, top + boxHeight - 14, 0xFFB8C0CC);
 
         ItemStack[] equipment = {
                 player.getItemBySlot(EquipmentSlot.HEAD),
@@ -142,11 +142,11 @@ public abstract class PauseScreenMixin extends Screen {
     private void siliconfps$drawButton(GuiGraphics graphics, String label, int x, int y, int width,
                                        int height, int mouseX, int mouseY) {
         boolean hovered = mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
-        graphics.fill(x, y, x + width, y + height, hovered ? 0xFFDCC4FF : 0xFF6C568A);
+        graphics.fill(x, y, x + width, y + height, hovered ? 0xFFE4E8EF : 0xFF66717F);
         graphics.fill(x + 1, y + 1, x + width - 1, y + height - 1,
-                hovered ? 0xFF30233E : 0xFF17121F);
+                hovered ? 0xFF303943 : 0xFF171C23);
         graphics.drawCenteredString(this.font, label, x + width / 2, y + (height - 8) / 2,
-                hovered ? 0xFFFFFFFF : 0xFFE1D8ED);
+                hovered ? 0xFFFFFFFF : 0xFFE1E5EA);
     }
 
 }
