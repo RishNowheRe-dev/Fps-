@@ -213,6 +213,46 @@ public final class PerformanceConfigScreen extends Screen {
         graphics.drawCenteredString(this.font, "SILICON FPS  •  CLIENT SIDE",
                 centerX, panelBottom - 10, 0xFF8E78B3);
         super.render(graphics, mouseX, mouseY, delta);
+
+        int tabWidth = Math.min(116, Math.max(62, (this.width - 34) / 4));
+        int totalTabsWidth = tabWidth * 4 + 18;
+        int tabStart = centerX - totalTabsWidth / 2;
+        for (int i = 0; i < Tab.values().length; i++) {
+            Tab tab = Tab.values()[i];
+            drawSiliconButton(graphics, (selectedTab == tab ? "◆ " : "") + tab.label,
+                    tabStart + i * (tabWidth + 6), 43, tabWidth, 21, mouseX, mouseY);
+        }
+
+        int buttonWidth = Math.min(360, panelWidth - 36);
+        int buttonLeft = centerX - buttonWidth / 2;
+        int actionY = panelBottom - 48;
+        switch (selectedTab) {
+            case GENERAL -> {
+                drawSiliconButton(graphics, lowEndPresetText(), buttonLeft, actionY,
+                        buttonWidth, 21, mouseX, mouseY);
+                drawSiliconButton(graphics, particleButtonText().getString(), buttonLeft,
+                        actionY + 24, buttonWidth, 21, mouseX, mouseY);
+            }
+            case QUALITY -> { }
+            case PERFORMANCE -> drawSiliconButton(graphics, particleButtonText().getString(),
+                    buttonLeft, panelBottom - 24, buttonWidth, 21, mouseX, mouseY);
+            case ADVANCED -> drawSiliconButton(graphics, hudButtonText().getString(),
+                    buttonLeft, sectionBottom - 27, buttonWidth, 21, mouseX, mouseY);
+        }
+        drawSiliconButton(graphics, "CLOSE CONTROL CENTER",
+                centerX - Math.min(150, panelWidth / 2 - 12), this.height - 25,
+                Math.min(300, panelWidth - 24), 20, mouseX, mouseY);
+    }
+
+    private void drawSiliconButton(GuiGraphics graphics, String label, int x, int y, int width,
+                                   int height, int mouseX, int mouseY) {
+        boolean hovered = mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
+        graphics.fill(x, y, x + width, y + height, hovered ? 0xFFDCC4FF : 0xFF6C568A);
+        graphics.fill(x + 1, y + 1, x + width - 1, y + height - 1,
+                hovered ? 0xFF30233E : 0xFF17121F);
+        graphics.fill(x + 6, y + 5, x + 8, y + height - 5, hovered ? 0xFFE2CAFF : 0xFF9D79D0);
+        graphics.drawCenteredString(this.font, label, x + width / 2, y + (height - 8) / 2,
+                hovered ? 0xFFFFFFFF : 0xFFE1D8ED);
     }
 
     @Override
