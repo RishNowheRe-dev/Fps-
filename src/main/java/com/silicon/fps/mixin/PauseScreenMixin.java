@@ -110,7 +110,7 @@ public abstract class PauseScreenMixin extends Screen {
         graphics.drawCenteredString(this.font, "PLAYER PROFILE", left + boxWidth / 2, profileTop + 9, 0xFFE0E4EA);
         SiliconPlayerPreview.render(graphics, left + 8, profileTop + 27,
                 left + boxWidth - 8, profileTop + boxHeight - 24, mouseX, mouseY, delta);
-        graphics.drawCenteredString(this.font, this.minecraft.getGameProfile().getName(),
+        graphics.drawCenteredString(this.font, this.minecraft.getGameProfile().name(),
                 left + boxWidth / 2, profileTop + boxHeight - 14, 0xFFB8C0CC);
     }
 
