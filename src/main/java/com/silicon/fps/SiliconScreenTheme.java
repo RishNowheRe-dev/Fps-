@@ -27,8 +27,8 @@ public final class SiliconScreenTheme {
         int height = screen.height;
         graphics.fill(0, 0, width, height, 0x35000000);
 
-        int panelWidth = Math.min(520, width - 32);
-        int panelHeight = Math.min(screen instanceof TitleScreen ? 300 : 250, height - 36);
+        int panelWidth = Math.min(screen instanceof TitleScreen ? 470 : 520, width - 28);
+        int panelHeight = Math.min(screen instanceof TitleScreen ? 310 : 250, height - 24);
         int left = (width - panelWidth) / 2;
         int top = (height - panelHeight) / 2;
         roundedPanel(graphics, left, top, panelWidth, panelHeight, 12, LAVENDER);
