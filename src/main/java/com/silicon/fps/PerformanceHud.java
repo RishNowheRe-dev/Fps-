@@ -46,6 +46,12 @@ public final class PerformanceHud {
         graphics.drawString(minecraft.font, fpsText, 6, 6, 0xFFFFFFFF, true);
         graphics.drawString(minecraft.font, memoryText, 6, 18, 0xFFB8E0FF, true);
         graphics.drawString(minecraft.font, renderText, 6, 30, 0xFF7FE7D5, true);
+        long gcCount = JvmTelemetry.getCollectionCount();
+        long gcTime = JvmTelemetry.getCollectionTimeMillis();
+        String gcText = gcCount < 0L || gcTime < 0L
+                ? "GC: unavailable"
+                : "GC: " + gcCount + " collections / " + gcTime + " ms total";
+        graphics.drawString(minecraft.font, gcText, 6, 42, 0xFFFFD27A, true);
     }
 
     private static String formatMiB(long bytes) {
