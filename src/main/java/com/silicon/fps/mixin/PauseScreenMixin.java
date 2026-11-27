@@ -79,6 +79,33 @@ public abstract class PauseScreenMixin extends Screen {
     private void siliconfps$renderSkinOnlyPreview(GuiGraphics graphics, int mouseX, int mouseY,
                                                    float delta, CallbackInfo ci) {
         if (this.minecraft == null || this.minecraft.player == null) return;
+        int center = this.width / 2;
+        int menuWidth = Math.min(440, this.width - 170);
+        int menuLeft = center - menuWidth / 2 + 26;
+        int menuTop = Math.max(38, this.height / 2 - 116);
+        int mainWidth = Math.min(250, this.width - 176);
+        if (mainWidth < 150) mainWidth = Math.max(120, this.width - 150);
+        int mainLeft = center - mainWidth / 2 + 52;
+        int top = Math.max(48, this.height / 2 - 54);
+        int half = (mainWidth - 5) / 2;
+        graphics.fill(menuLeft, menuTop, menuLeft + menuWidth, menuTop + 230, 0xE9090710);
+        graphics.fill(menuLeft + 16, menuTop + 18, menuLeft + menuWidth - 16, menuTop + 19, 0xFF9D79D0);
+        graphics.drawCenteredString(this.font, "S I L I C O N", center + 26, menuTop + 30, 0xFFE6D8FF);
+        graphics.drawCenteredString(this.font, "GAME MENU", center + 26, menuTop + 45, 0xFFBDA9D8);
+        siliconfps$drawButton(graphics, "BACK TO GAME", mainLeft, top, mainWidth, 22, mouseX, mouseY);
+        siliconfps$drawButton(graphics, "ADVANCEMENTS", mainLeft, top + 28, half, 20, mouseX, mouseY);
+        siliconfps$drawButton(graphics, "STATISTICS", mainLeft + half + 5, top + 28, half, 20, mouseX, mouseY);
+        siliconfps$drawButton(graphics, "OPTIONS", mainLeft, top + 53, half, 20, mouseX, mouseY);
+        siliconfps$drawButton(graphics, "SILICON MODULES", mainLeft + half + 5, top + 53, half, 20, mouseX, mouseY);
+        siliconfps$drawButton(graphics, "DISCONNECT", mainLeft, top + 78, mainWidth, 22, mouseX, mouseY);
+        int tabWidth = Math.min(66, Math.max(48, (this.width - 24) / 4));
+        int tabLeft = this.width - (tabWidth * 4 + 9) - 12;
+        String[] tabLabels = {"ACCOUNTS", "WARDROBE", "PERF", "MODULES"};
+        for (int i = 0; i < tabLabels.length; i++) {
+            siliconfps$drawButton(graphics, tabLabels[i], tabLeft + i * (tabWidth + 3), 12,
+                    tabWidth, 19, mouseX, mouseY);
+        }
+
         var player = this.minecraft.player;
         int left = 14;
         int top = Math.max(38, this.height / 2 - 78);
@@ -112,4 +139,14 @@ public abstract class PauseScreenMixin extends Screen {
             for (int i = 0; i < slots.length; i++) player.setItemSlot(slots[i], equipment[i]);
         }
     }
+    private void siliconfps$drawButton(GuiGraphics graphics, String label, int x, int y, int width,
+                                       int height, int mouseX, int mouseY) {
+        boolean hovered = mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
+        graphics.fill(x, y, x + width, y + height, hovered ? 0xFFDCC4FF : 0xFF6C568A);
+        graphics.fill(x + 1, y + 1, x + width - 1, y + height - 1,
+                hovered ? 0xFF30233E : 0xFF17121F);
+        graphics.drawCenteredString(this.font, label, x + width / 2, y + (height - 8) / 2,
+                hovered ? 0xFFFFFFFF : 0xFFE1D8ED);
+    }
+
 }
