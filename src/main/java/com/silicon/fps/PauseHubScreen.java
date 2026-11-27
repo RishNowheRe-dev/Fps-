@@ -21,7 +21,8 @@ public final class PauseHubScreen extends Screen {
     @Override
     protected void init() {
         int center = this.width / 2;
-        int panelTop = top;
+        int panelHeight = Math.min(360, this.height - 24);
+        int panelTop = (this.height - panelHeight) / 2;
         int tabWidth = Math.min(112, Math.max(72, (this.width - 48) / 3));
         int gap = 5;
         int start = center - (tabWidth * 3 + gap * 2) / 2;
@@ -87,37 +88,36 @@ public final class PauseHubScreen extends Screen {
         int left = (this.width - panelWidth) / 2;
         int top = (this.height - panelHeight) / 2;
         graphics.fill(left, top, left + panelWidth, top + panelHeight, 0xF5000000);
-        graphics.fill(left, top, left + panelWidth, top + 2, 0xFF9D79D0);
-        graphics.fill(left + 16, top + 38, left + panelWidth - 16, top + 39, 0xFF39284F);
+        graphics.fill(left, top, left + panelWidth, top + 2, 0xFFB8C0CC);
+        graphics.fill(left + 16, top + 38, left + panelWidth - 16, top + 39, 0x556D7785);
 
-        graphics.drawCenteredString(this.font, "S I L I C O N", this.width / 2, top + 12, 0xFFD8BFFF);
-        graphics.drawCenteredString(this.font, "UNIFIED CLIENT HUB", this.width / 2, top + 27, 0xFFB9AEC8);
+        graphics.drawCenteredString(this.font, "S I L I C O N", this.width / 2, top + 12, 0xFFE1E5EA);
+        graphics.drawCenteredString(this.font, "UNIFIED CLIENT HUB", this.width / 2, top + 27, 0xFFB9C1CC);
 
         switch (tab) {
             case MODULES -> {
                 graphics.drawCenteredString(this.font, "PERFORMANCE MODULES", this.width / 2, top + 83, 0xFFFFFFFF);
                 graphics.drawCenteredString(this.font, "Toggle lightweight client-side features or apply the low-end preset.",
-                        this.width / 2, top + 105, 0xFFB9AEC8);
+                        this.width / 2, top + 105, 0xFFB9C1CC);
                 graphics.drawCenteredString(this.font, "Potato Mode lowers visual workload while preserving player visibility.",
-                        this.width / 2, top + 119, 0xFF91869F);
+                        this.width / 2, top + 119, 0xFF929BA8);
                 graphics.drawCenteredString(this.font, "Preset status: " + (PerformanceConfig.lowEndPresetApplied ? "APPLIED" : "NOT APPLIED"),
-                        this.width / 2, top + 239, 0xFFD8BFFF);
+                        this.width / 2, top + 239, 0xFFE1E5EA);
             }
             case ACCOUNTS -> {
                 graphics.drawCenteredString(this.font, "ACCOUNT MANAGER", this.width / 2, top + 103, 0xFFFFFFFF);
-                graphics.drawCenteredString(this.font, "Account switching is not implemented yet.", this.width / 2, top + 125, 0xFFB9AEC8);
-                graphics.drawCenteredString(this.font, "SILICON never asks for or stores your password.", this.width / 2, top + 143, 0xFF91869F);
+                graphics.drawCenteredString(this.font, "Account switching is not implemented yet.", this.width / 2, top + 125, 0xFFB9C1CC);
+                graphics.drawCenteredString(this.font, "SILICON never asks for or stores your password.", this.width / 2, top + 143, 0xFF929BA8);
             }
             case WARDROBE -> {
                 graphics.drawCenteredString(this.font, "COSMETICS & OUTFITS", this.width / 2, top + 103, 0xFFFFFFFF);
-                graphics.drawCenteredString(this.font, "Wardrobe and custom cosmetics are not implemented yet.", this.width / 2, top + 125, 0xFFB9AEC8);
+                graphics.drawCenteredString(this.font, "Wardrobe and custom cosmetics are not implemented yet.", this.width / 2, top + 125, 0xFFB9C1CC);
             }
         }
         super.render(graphics, mouseX, mouseY, delta);
 
         int center = this.width / 2;
-        int panelHeight = Math.min(360, this.height - 24);
-        int panelTop = (this.height - panelHeight) / 2;
+        int panelTop = top;
         int tabWidth = Math.min(112, Math.max(72, (this.width - 48) / 3));
         int gap = 5;
         int tabStart = center - (tabWidth * 3 + gap * 2) / 2;
@@ -148,12 +148,12 @@ public final class PauseHubScreen extends Screen {
     private void drawSiliconButton(GuiGraphics graphics, String label, int x, int y, int width,
                                    int height, int mouseX, int mouseY) {
         boolean hovered = mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
-        graphics.fill(x, y, x + width, y + height, hovered ? 0xFFDCC4FF : 0xFF6C568A);
+        graphics.fill(x, y, x + width, y + height, hovered ? 0xFFE4E8EF : 0xFF66717F);
         graphics.fill(x + 1, y + 1, x + width - 1, y + height - 1,
-                hovered ? 0xFF30233E : 0xFF17121F);
-        graphics.fill(x + 6, y + 5, x + 8, y + height - 5, hovered ? 0xFFE2CAFF : 0xFF9D79D0);
+                hovered ? 0xFF303943 : 0xFF171C23);
+        graphics.fill(x + 6, y + 5, x + 8, y + height - 5, hovered ? 0xFFE7EBF1 : 0xFF929BA8);
         graphics.drawCenteredString(this.font, label, x + width / 2, y + (height - 8) / 2,
-                hovered ? 0xFFFFFFFF : 0xFFE1D8ED);
+                hovered ? 0xFFFFFFFF : 0xFFE1E5EA);
     }
 
     @Override
