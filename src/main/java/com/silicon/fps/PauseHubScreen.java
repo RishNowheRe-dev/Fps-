@@ -21,7 +21,6 @@ public final class PauseHubScreen extends Screen {
     @Override
     protected void init() {
         int center = this.width / 2;
-        int panelHeight = Math.min(360, this.height - 24);
         int panelTop = (this.height - panelHeight) / 2;
         int tabWidth = Math.min(112, Math.max(72, (this.width - 48) / 3));
         int gap = 5;
